@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export function useDevice(): [BluetoothRemoteGATTServer | null, () => Promise<void>] {
+export function useDevice(serviceUUID: string): [BluetoothRemoteGATTServer | null, () => Promise<void>] {
 
     // Create state
     let deviceRef = React.useRef<BluetoothRemoteGATTServer | null>(null);
@@ -12,7 +12,8 @@ export function useDevice(): [BluetoothRemoteGATTServer | null, () => Promise<vo
             // Connect to device
             let connected = await navigator.bluetooth.requestDevice({
                 filters: [{ name: 'OpenGlass' }],
-                optionalServices: ['19B10000-E8F2-537E-4F6C-D104768A1214'.toLowerCase()],
+                // optionalServices: ['19B10000-E8F2-537E-4F6C-D104768A1214'.toLowerCase()],
+                optionalServices: [serviceUUID.toLowerCase()],
             });
 
             // Connect to gatt

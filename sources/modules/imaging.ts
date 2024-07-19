@@ -1,13 +1,13 @@
-export function rotateImage(src: Uint8Array, angle: '90' | '180' | '270') {
+export function rotateImage(src: Uint8Array, angle: '90' | '180' | '270' |'0') {
     return new Promise<Uint8Array>((resolve, reject) => {
         const img = new Image();
         img.onload = () => {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d')!;
-            canvas.width = img.height;
-            canvas.height = img.width;
+            ctx.rotate(angle === '90' ? Math.PI / 2 : angle === '180' ? Math.PI :  angle === '270' ? Math.PI * 1.5: 0);
+            canvas.width = img.width;
+            canvas.height = img.height;
             ctx.translate(canvas.width / 2, canvas.height / 2);
-            ctx.rotate(angle === '90' ? Math.PI / 2 : angle === '180' ? Math.PI : Math.PI * 1.5);
             ctx.drawImage(img, -img.width / 2, -img.height / 2);
             canvas.toBlob(blob => {
                 if (blob) {

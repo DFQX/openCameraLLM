@@ -1,13 +1,10 @@
-import * as React from 'react';
-import { ActivityIndicator, Image, ScrollView, Text, TextInput, View } from 'react-native';
-import { rotateImage } from '../modules/imaging';
-import { toBase64Image } from '../utils/base64';
-import { Agent } from '../agent/Agent';
-import { InvalidateSync } from '../utils/invalidateSync';
-import { textToSpeech } from '../modules/openai';
-
-function usePhotos(device: BluetoothRemoteGATTServer) {
-
+import { rotateImage } from '../../modules/imaging';
+import React from 'react';
+import { toBase64Image } from '../../utils/base64';
+import { ImageSourcePropType } from 'react-native';
+   
+// 蓝牙设置
+export function usePhotos(device: BluetoothRemoteGATTServer, rawData:{uri: string, checked: boolean | undefined, type1: string, type2: string, describeImage: string}[], setRawData:any) {
     // Subscribe to device
     const [photos, setPhotos] = React.useState<Uint8Array[]>([]);
     const [subscribed, setSubscribed] = React.useState<boolean>(false);
@@ -16,7 +13,6 @@ function usePhotos(device: BluetoothRemoteGATTServer) {
             let previousChunk = -1;
             let buffer: Uint8Array = new Uint8Array(0);
             function onChunk(id: number | null, data: Uint8Array) {
-
                 // Resolve if packet is the first one
                 if (previousChunk === -1) {
                     if (id === null) {
@@ -29,10 +25,17 @@ function usePhotos(device: BluetoothRemoteGATTServer) {
                     }
                 } else {
                     if (id === null) {
-                        console.log('Photo received', buffer);
-                        rotateImage(buffer, '90').then((rotated) => {
-                            console.log('Rotated photo', rotated);
+                        console.log('Photo received');
+                        rotateImage(buffer, '0').then((rotated) => {
+                            // console.log('Rotated photo', rotated);
                             setPhotos((p) => [...p, rotated]);
+                            setRawData((r: any)=>[...r,{
+                                uri: toBase64Image(rotated),
+                                checked: false,
+                                type1: '',
+                                type2: '',
+                                describeImage: ''
+                            }]);
                         });
                         previousChunk = -1;
                         return;
@@ -45,11 +48,9 @@ function usePhotos(device: BluetoothRemoteGATTServer) {
                         previousChunk = id;
                     }
                 }
-
                 // Append data
                 buffer = new Uint8Array([...buffer, ...data]);
             }
-
             // Subscribe for photo updates
             const service = await device.getPrimaryService('19B10000-E8F2-537E-4F6C-D104768A1214'.toLowerCase());
             const photoCharacteristic = await service.getCharacteristic('19b10005-e8f2-537e-4f6c-d104768a1214');
@@ -58,9 +59,9 @@ function usePhotos(device: BluetoothRemoteGATTServer) {
             photoCharacteristic.addEventListener('characteristicvaluechanged', (e) => {
                 let value = (e.target as BluetoothRemoteGATTCharacteristic).value!;
                 let array = new Uint8Array(value.buffer);
-                if (array[0] == 0xff && array[1] == 0xff) {
+                if (array[0] == 0xff && array[1] == 0xff) {    // End of photo
                     onChunk(null, new Uint8Array());                   
-                } else {
+                } else {                                      // 前两个字节是包序号
                     let packetId = array[0] + (array[1] << 8);
                     let packet = array.slice(2);
                     onChunk(packetId, packet);
@@ -68,27 +69,5 @@ function usePhotos(device: BluetoothRemoteGATTServer) {
             });
         })();
     }, []);
-
     return [subscribed, photos] as const;
 }
-
-export const DeviceView = React.memo((props: { device: BluetoothRemoteGATTServer }) => {
-    const [subscribed, photos] = usePhotos(props.device);
-
-    // Background processing agent
-    const processedPhotos = React.useRef<Uint8Array[]>([]);
-
-    return (
-
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                    {photos.map((photo, index) => (
-                        <Image key={index} style={{ width: 100, height: 100 }} source={{ uri: toBase64Image(photo) }} />
-                    ))}
-                </View>
-            </View>
-        </View>
-    )
-    ;
-});

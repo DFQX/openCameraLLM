@@ -5,124 +5,15 @@ import CameraTab from './CameraTab';
 import { Pagination } from '@douyinfe/semi-ui';
 import { Select } from '@douyinfe/semi-ui';
 import { SelectProps } from '@douyinfe/semi-ui/lib/es/select';
+import { describeImage } from '../../modules/openai';
+import { usePhotos } from '../BleCommunication/UsePhotos';
+import { toBase64Image } from '../../utils/base64';
+import { ImageSourcePropType } from 'react-native';
 
-export default function ContentTabs(){
-    const data = [
-        {
-            title: '审核管理平台',
-            rating: 4.5,
-            feedbacks: 124,
-        },
-        {
-            title: '扁鹊',
-            rating: 4,
-            feedbacks: 108,
-        },
-        {
-            title: '直播审核平台',
-            rating: 4.5,
-            feedbacks: 244,
-        },
-        {
-            title: '抖音安全测试',
-            feedbacks: 189,
-        },
-        {
-            title: '审核管理平台',
-            rating: 4.5,
-            feedbacks: 124,
-        },
-        {
-            title: '扁鹊',
-            rating: 4,
-            feedbacks: 108,
-        },
-        {
-            title: '直播审核平台',
-            rating: 4.5,
-            feedbacks: 244,
-        },
-        {
-            title: '抖音安全测试',
-            feedbacks: 189,
-        },
-        {
-            title: '审核管理平台',
-            rating: 4.5,
-            feedbacks: 124,
-        },
-        {
-            title: '扁鹊',
-            rating: 4,
-            feedbacks: 108,
-        },
-        {
-            title: '直播审核平台',
-            rating: 4.5,
-            feedbacks: 244,
-        },
-        {
-            title: '抖音安全测试',
-            feedbacks: 189,
-        },
-        {
-            title: '审核管理平台',
-            rating: 4.5,
-            feedbacks: 124,
-        },
-        {
-            title: '扁鹊',
-            rating: 4,
-            feedbacks: 108,
-        },
-        {
-            title: '直播审核平台',
-            rating: 4.5,
-            feedbacks: 244,
-        },
-        {
-            title: '抖音安全测试',
-            feedbacks: 189,
-        },
-        {
-            title: '审核管理平台',
-            rating: 4.5,
-            feedbacks: 124,
-        },
-        {
-            title: '扁鹊',
-            rating: 4,
-            feedbacks: 108,
-        },
-        {
-            title: '直播审核平台',
-            rating: 4.5,
-            feedbacks: 244,
-        },
-        {
-            title: '抖音安全测试',
-            feedbacks: 189,
-        },
-        {
-            title: '审核管理平台',
-            rating: 4.5,
-            feedbacks: 124,
-        },
-        {
-            title: '扁鹊',
-            rating: 4,
-            feedbacks: 108,
-        },
-        {
-            title: '直播审核平台',
-            rating: 4.5,
-            feedbacks: 244,
-        },
-        {
-            title: '抖音安全测试',
-            feedbacks: 189,
-        },
-    ];
+
+export default function ContentTabs(props: {device:BluetoothRemoteGATTServer}){
+
+
     const [ikey, setIkey] = React.useState('1');
     function onTabClick(key: string) {
         setIkey(key);
@@ -133,25 +24,152 @@ export default function ContentTabs(){
         { tab: <span><IconEyeClosed />过滤</span>, itemKey: '2' },
         { tab: <span><IconBox />导出</span>, itemKey: '3' },
     ];
+    
+    // 获取蓝牙的图像
+    const rawData0 = [
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+        {
+            src: "https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/card-cover-docs-demo.jpeg",
+            checked: false,
+            type1: '',
+            type2: '',
+            describeImage: '这是AI智能体分析的图片描述，图片显示一个人坐在电脑前，正在...'
+        },
+    ];
+    const [rawData, setRawData] = React.useState<{uri: string, checked: boolean | undefined, type1: string, type2: string, describeImage: string}[]>([]);
+    const [subscribed, photos] = usePhotos(props.device, rawData, setRawData);
+
+    
     const { Header, Footer, Sider, Content } = Layout;
     const [page, setPage] = React.useState(1);
     const [pageSize, setPageSize] = React.useState(18);
-    const contentList = [<CameraTab data={data} page={page} pageSize={pageSize} setPage={setPage} setPageSize={setPageSize}/>, 
+    const contentList = [<CameraTab rawData={rawData} page={page} pageSize={pageSize} 
+        setPage={setPage} setPageSize={setPageSize} setRawData={setRawData} photos={photos}/>, 
             <div>快速起步</div>, 
             <div>帮助</div>
             ];
 
-    const list = [
-        { value: 6, label: '6'},
-        { value: 12, label: '12'},
-        { value: 18, label: '18' },
-        { value: 24, label: '24'},
-        { value: 30, label: '30'},
-        { value: 36, label: '36'},
-    ];
     return (
-        <div >
-            <div style={{ height: '5%' }}>
+        <Layout>
+            <header style={{ height: '5%' }}>
                 <Tabs
                     type="card"
                     tabList={tabList}
@@ -160,8 +178,10 @@ export default function ContentTabs(){
                     }}
                     >
                 </Tabs>
-            </div>
-            {contentList[parseInt(ikey) - 1]}
-        </div>
+            </header>
+            <Content style={{ height: '95%' }}>
+                {contentList[parseInt(ikey) - 1]}
+            </Content>
+        </Layout>
     );
 }

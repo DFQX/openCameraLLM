@@ -1,0 +1,122 @@
+{
+    "type1": [{
+            "name": "study",
+            "type2": [{
+                    "name": "desktop",
+                    "type3": [{
+                            "name": "body",
+                            "type4": [{
+                                    "name": "study"
+                                },
+                                {
+                                    "name": "drink"
+                                },
+                                {
+                                    "name": "eat"
+                                },
+                                {
+                                    "name": "phone"
+                                },
+                                {
+                                    "name": "computer"
+                                },
+                                {
+                                    "name": "pad"
+                                },
+                                {
+                                    "name": "bag"
+                                },
+                                {
+                                    "name": "book"
+                                },
+                                {
+                                    "name": "pen"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "nobody"
+                        }
+                    ]
+                },
+                {
+                    "name": "chest",
+                    "type3": [{
+                            "name": "phone"
+                        },
+                        {
+                            "name": "computer"
+                        },
+                        {
+                            "name": "pad"
+                        },
+                        {
+                            "name": "pen"
+                        },
+                        {
+                            "name": "book"
+                        },
+                        {
+                            "name": "bag"
+                        },
+                        {
+                            "name": "drink"
+                        },
+                        {
+                            "name": "eat"
+                        },
+                        {
+                            "name": "study"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "dining",
+            "type2": [{
+                    "name": "large"
+                },
+                {
+                    "name": "small"
+                },
+                {
+                    "name": "middle"
+                }
+            ]
+        },
+        {
+            "name": "exercise",
+            "type2": [{
+                    "name": "outdoor",
+                    "type3": [{
+                            "name": "run"
+                        },
+                        {
+                            "name": "other"
+                        }
+                    ]
+                },
+                {
+                    "name": "indoor",
+                    "type3": [{
+                            "name": "treadmill"
+                        },
+                        {
+                            "name": "yoga"
+                        },
+                        {
+                            "name": "rope skipping"
+                        },
+                        {
+                            "name": "power training"
+                        },
+                        {
+                            "name": "other"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
