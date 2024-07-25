@@ -26,14 +26,22 @@ export default function SiderBleConfig(props:{connectDevice:() => Promise<any>, 
         }
         props.setCharacteristicUUID(props.characteristicUUID);
     }
+    function handelServiceUUIDChange(value:string){
+        props.setServiceUUID(value);
+    }
+
+    function handleCharacteristicUUIDChange(value:string){
+        props.setCharacteristicUUID(value);
+    }
+
     return (
         <div style={{width:'240px'}}>    
             <Divider margin='12px' align='center'>
                 设置蓝牙
             </Divider>
             <div style={{flex:'center', marginLeft:'15px', marginRight:'15px'}}>
-                <Input placeholder='Service-UUID' size='large' style={{marginBottom:"5px"}} onEnterPress={handleServiceUUID} value={props.serviceUUID}></Input>
-                <Input placeholder='Characteristic-UUID' size='large' style={{marginTop:'5px'}} onEnterPress={handleChaUUID} value={props.characteristicUUID}></Input>
+                <Input placeholder='Service-UUID' size='large' style={{marginBottom:"5px"}} onChange={handelServiceUUIDChange} onEnterPress={handleServiceUUID} value={props.serviceUUID}></Input>
+                <Input placeholder='Characteristic-UUID' size='large' style={{marginTop:'5px'}} onChange={handleCharacteristicUUIDChange} onEnterPress={handleChaUUID} value={props.characteristicUUID}></Input>
             </div>
             <Divider margin='12px' align='center'>
                 连接

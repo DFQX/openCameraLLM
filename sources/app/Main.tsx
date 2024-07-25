@@ -108,20 +108,10 @@ export const Main = React.memo(() => {
 
     
     return (
-        // <SafeAreaView style={styles.container}>
-        //     {!device && (
-        //         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
-        //             <RoundButton title="Connect to the device" action={connectDevice} />
-        //         </View>
-        //     )}
-        //     {device && (
-        //         <DeviceView device={device} />
-        //     )}
-        // </SafeAreaView>
         <Layout className="components-layout-demo">
             <Header style={commonStyle}>
                 <Space style={{marginBottom:'10px', display:'flex', justifyContent:'center'}}>    
-                    <h2 style={{margin:'0px', color:'white'}}>图像采集系统</h2>
+                    <h2 style={{margin:'0px', color:'white'}}>OpenGlass</h2>
                 </Space>
             </Header>
             <Layout style={{ height: '80%'}}>
@@ -135,10 +125,15 @@ export const Main = React.memo(() => {
                 </Sider>
                 <Content style={{overflow:'hidden'}}>
                     {device && <ContentTabs device={device} />}
+                    {/* {<ContentTabs device={device} />} */}
                 </Content>
             </Layout>
 
-            <Footer style={commonStyle}></Footer>
+            <Footer style={commonStyle}>
+                <Space style={{marginBottom:'10px', display:'flex', justifyContent:'center'}}>    
+                    <p style={{margin:'0px', color:'white'}}>本项目是openGlass的进一步改进，优化UI设计</p>
+                </Space>
+            </Footer>
         </Layout>
     );
 });

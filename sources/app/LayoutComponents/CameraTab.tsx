@@ -142,7 +142,7 @@ export default function CameraTab(props:{rawData: {uri: string, checked: boolean
 
         function getAbstrctDesc(desc: string){
             if(desc.length > 20){
-                return desc.substring(0,20) + "...";
+                return desc.substring(0,100) + "...";
             }else{
                 return desc;
             }
