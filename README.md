@@ -2,6 +2,8 @@
 
 Turn any glasses into hackable smart glasses with less than $25 of off-the-shelf components. Record your life, remember people you meet, identify objects, translate text, and more.
 
+本项目是基于OpenGlass进行优化，硬件只要一个Esp32S3 Xiao就可以，价格80左右。
+
 ![OpenGlass](https://github.com/BasedHardware/OpenGlass/assets/43514161/2fdc9d9d-2206-455c-ba60-10dbd6fb3dfb)
 
 
