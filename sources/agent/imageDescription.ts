@@ -19,7 +19,7 @@ export async function imageDescription(src: Uint8Array, model?: KnownModel): Pro
     }); 
 }
 
-export async function llamaFind(question: string, images: string): Promise<string> {
+export async function llamaFind(question: string, images: string, prompt: string): Promise<string> {
     // rreturn groqRequest(
     //          `
     //             You are a smart AI that need to read through description of a images and answer user's questions. 
@@ -35,6 +35,10 @@ export async function llamaFind(question: string, images: string): Promise<strin
     //     , 
     //         question
     // );
+    if(images==''){
+        return groqRequest(prompt, question);
+    }
+
     return groqRequest(
         `
            你是一个需要通读图像描述并回答用户问题的智能人工智能。

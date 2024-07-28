@@ -4,10 +4,13 @@ import { toBase64Image } from '../../utils/base64';
 import { ImageSourcePropType } from 'react-native';
    
 // 蓝牙设置
-export function usePhotos(device: BluetoothRemoteGATTServer, rawData:{uri: string, checked: boolean | undefined, type1: string, type2: string, describeImage: string}[], setRawData:any) {
+export function usePhotos(device: BluetoothRemoteGATTServer|null, rawData:{uri: string, checked: boolean | undefined, type1: string, type2: string, describeImage: string}[], setRawData:any) {
     // Subscribe to device
     const [photos, setPhotos] = React.useState<Uint8Array[]>([]);
     const [subscribed, setSubscribed] = React.useState<boolean>(false);
+    if(device==null){
+        return [subscribed, photos] as const;
+    }
     React.useEffect(() => {
         (async () => {
             let previousChunk = -1;

@@ -1,17 +1,14 @@
 import React from 'react';
-import { Tabs, TabPane, Layout } from '@douyinfe/semi-ui';
-import { IconCamera, IconEyeClosed, IconBox } from '@douyinfe/semi-icons';
+import { Tabs,  Layout } from '@douyinfe/semi-ui';
+import { IconCamera, IconLayers } from '@douyinfe/semi-icons';
 import CameraTab from './CameraTab';
-import { Pagination } from '@douyinfe/semi-ui';
-import { Select } from '@douyinfe/semi-ui';
-import { SelectProps } from '@douyinfe/semi-ui/lib/es/select';
-import { describeImage } from '../../modules/openai';
+import ChatTab from './ChatTab';
 import { usePhotos } from '../BleCommunication/UsePhotos';
-import { toBase64Image } from '../../utils/base64';
-import { ImageSourcePropType } from 'react-native';
+import { Agent } from '../../agent/Agent';
+import { InvalidateSync } from '../../utils/invalidateSync';
 
 
-export default function ContentTabs(props: {device:BluetoothRemoteGATTServer}){
+export default function ContentTabs(props: {device:BluetoothRemoteGATTServer|null}){
 
 
     const [ikey, setIkey] = React.useState('1');
@@ -21,8 +18,7 @@ export default function ContentTabs(props: {device:BluetoothRemoteGATTServer}){
         // eslint-disable-next-line react/jsx-key
     const tabList = [
         { tab: <span><IconCamera />图像</span>, itemKey: '1' },
-        { tab: <span><IconEyeClosed />过滤</span>, itemKey: '2' },
-        { tab: <span><IconBox />导出</span>, itemKey: '3' },
+        { tab: <span><IconLayers />大模型</span>, itemKey: '2' }
     ];
     
     // 获取蓝牙的图像
@@ -157,14 +153,44 @@ export default function ContentTabs(props: {device:BluetoothRemoteGATTServer}){
     const [rawData, setRawData] = React.useState<{uri: string, checked: boolean | undefined, type1: string, type2: string, describeImage: string}[]>([]);
     const [subscribed, photos] = usePhotos(props.device, rawData, setRawData);
 
+    const agent = React.useMemo(() => new Agent(), []);
+    const agentState = agent.use();
+
+    // Background processing agent
+    const processedPhotos = React.useRef<Uint8Array[]>([]);
+    const sync = React.useMemo(() => {
+        let processed = 0;
+        return new InvalidateSync(async () => {
+            if (processedPhotos.current!=null && processedPhotos.current.length > processed) {
+                let unprocessed = processedPhotos.current.slice(processed);
+                processed = processedPhotos.current.length;
+                await agent.addPhoto(unprocessed);
+            }
+        });
+    }, []);
+    React.useEffect(() => {
+        processedPhotos.current = photos;
+        sync.invalidate();
+        let rawDataCopy = rawData.slice();
+        agent.photos.map(async (v, i) => {
+            rawDataCopy[i].describeImage = v.description;
+        })
+        setRawData(rawDataCopy);
+    }, [photos]);
+
+    // React.useEffect(() => {
+    //     if (agentState.answer) {
+    //         textToSpeech(agentState.answer)
+    //     }
+    // }, [agentState.answer])
+
     
     const { Header, Footer, Sider, Content } = Layout;
     const [page, setPage] = React.useState(1);
     const [pageSize, setPageSize] = React.useState(18);
     const contentList = [<CameraTab rawData={rawData} page={page} pageSize={pageSize} 
         setPage={setPage} setPageSize={setPageSize} setRawData={setRawData} photos={photos}/>, 
-            <div>快速起步</div>, 
-            <div>帮助</div>
+            <ChatTab agent={agent} agentState={agentState}/>
             ];
 
     return (

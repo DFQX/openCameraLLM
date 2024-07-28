@@ -43,19 +43,19 @@ function commandSetLE(command: number, data: Uint8Array): Uint8Array{
     return new Uint8Array([command, length, ...data]);
 }
 
-// 指令：0  设置低功耗模式
+// 指令：1  设置低功耗模式
 function commandSetPhoto(command: number, data: Uint8Array): Uint8Array{
     const length = 2 + data.length;
     return new Uint8Array([command, length, ...data]);
 }
 
-// 指令：0  设置低功耗模式
+// 指令：2  设置低功耗模式
 function commandSetAudio(command: number, data: Uint8Array): Uint8Array{
     const length = 2 + data.length;
     return new Uint8Array([command, length, ...data]);
 }
 
-// 指令：0  设置低功耗模式
+// 指令：3  设置低功耗模式
 function commandSetSD(command: number, data: Uint8Array): Uint8Array{
     const length = 2 + data.length;
     return new Uint8Array([command, length, ...data]);

@@ -1,82 +1,88 @@
-# OpenGlass - Open Source Smart Glasses
+# 智能硬件—OpenCameraLLM
 
-Turn any glasses into hackable smart glasses with less than $25 of off-the-shelf components. Record your life, remember people you meet, identify objects, translate text, and more.
+该项目是基于OpenGlass进行优化后开源的，地址：https://github.com/BasedHardware/OpenGlass，硬件是esp32s3 xiao, 成本为80左右。功能：可以记录你的生活、记住你见过的人、识别物体、翻译等等。另外还添加了大模型的对话窗口，可以自定义Prompt。
 
-本项目是基于OpenGlass进行优化，硬件只要一个Esp32S3 Xiao就可以，价格80左右。
+## 功能展示
 
-![OpenGlass](https://github.com/BasedHardware/OpenGlass/assets/43514161/2fdc9d9d-2206-455c-ba60-10dbd6fb3dfb)
+- 拍照并将图片的描述展示，这里使用的图片识别模型只能用英文。
+
+<img src="README/image-20240728180957426.png" alt="image-20240728180957426" style="zoom: 33%;" />
+
+- 在大模型页面可以直接根据图片内容提问，或者自定义Prompt直接询问千问大模型。
+
+  <img src="README/image-20240728181248415.png" alt="image-20240728181248415" style="zoom:33%;" />
 
 
-## Video Demo
 
-[![OpenGlass Demo](https://img.youtube.com/vi/DsM_-c2e1ew/0.jpg)](https://youtu.be/DsM_-c2e1ew)
 
-## Want a Pre-built Version?
 
-We will ship a limited number of pre-built kits. Fill out the [interest form](https://basedhardware.com/openglass) to get notified.
 
-## Community
 
-Join the [Based Hardware Discord](https://discord.com/invite/ZutWMTJnwA) for setup questions, contribution guide, and more.
+## 硬件照片
 
-## Getting Started
+<img src="README/image-20240728074357550.png" alt="image-20240728074357550" style="zoom: 25%;" />
 
-Follow these steps to set up OpenGlass:
+## 环境配置
 
-### Hardware
+无需OpenAI接口，配置好环境后无网络也可以运行大模型。
 
-1. Gather the required components:
-   - [Seeed Studio XIAO ESP32 S3 Sense](https://www.amazon.com/dp/B0C69FFVHH/ref=dp_iou_view_item?ie=UTF8&psc=1)
-   - [EEMB LP502030 3.7v 250mAH battery](https://www.amazon.com/EEMB-Battery-Rechargeable-Lithium-Connector/dp/B08VRZTHDL)
-   - [3D printed glasses mount case](https://storage.googleapis.com/scott-misc/openglass_case.stl)
+下载开源大模型
 
-2. 3D print the glasses mount case using the provided STL file.
+[https://github.com/ollama/ollama](https://github.com/ollama/ollama) 在主页查看相关信息，windows下载Ollama,下载后CMD执行
 
-3. Open the [firmware folder](https://github.com/BasedHardware/openglass/tree/main/firmware) and open the `.ino` file in the Arduino IDE.
-   - If you don't have the Arduino IDE installed, download and install it from the [official website](https://www.arduino.cc/en/software).
+```ollama run qwen```
 
-4. Follow the software preparation steps to set up the Arduino IDE for the XIAO ESP32S3 board:
-   - Add ESP32 board package to your Arduino IDE:
-     - Navigate to File > Preferences, and fill "Additional Boards Manager URLs" with the URL: `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json`
-     - Navigate to Tools > Board > Boards Manager..., type the keyword `esp32` in the search box, select the latest version of `esp32`, and install it.
-   - Select your board and port:
-     - On top of the Arduino IDE, select the port (likely to be COM3 or higher).
-     - Search for `xiao` in the development board on the left and select `XIAO_ESP32S3`.
+```ollama run moondream:1.8b-v2-fp16```
 
-5. Before you flash go to the "Tools" drop down in the Arduino IDE and make sure you set "PSRAM:" to be "PSRAM: "OPI PSRAM"
+千问大模型用来进行对话，同时支持中文。moondream用来做图像分析描述的，似乎不支持中文。
 
-![Like this](image.png)
 
-6. Upload the firmware to the XIAO ESP32S3 board.
 
-### Software
+## 下载Arduino
 
-1. Clone the OpenGlass repository and install the dependencies:
+- 添加ESP32包，直接添加:
+
+  <img src="README/image-20240728110707596.png" alt="image-20240728110707596" style="zoom:50%;" />
+
+  也可以使用下面的方法添加：
+
+  - Navigate to File > Preferences, and fill "Additional Boards Manager URLs" with the URL: `https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json`
+  - Navigate to Tools > Board > Boards Manager..., type the keyword `esp32` in the search box, select the latest version of `esp32`, and install it.
+
+- 选择开发板和串口:
+
+  - 在Arduino顶部选择串口，下拉框最下"select other board and port..."
+  - 搜索 `xiao`并选择`XIAO_ESP32S3`,串口选择最大的
+
+- 下载程序到`xiao`开发板之前，先在Tools->PSRAM->PSRAM: "OPI PSRAM"
+
+- 将firmware路径的代码下载到XIAO ESP32S3开发板
+
+## 硬件地址:
+
+
+
+- [Seeed Studio XIAO ESP32 S3 Sense](https://www.amazon.com/dp/B0C69FFVHH/ref=dp_iou_view_item?ie=UTF8&psc=1)
+- [EEMB LP502030 3.7v 250mAH battery](https://www.amazon.com/EEMB-Battery-Rechargeable-Lithium-Connector/dp/B08VRZTHDL)
+- [3D printed glasses mount case](https://storage.googleapis.com/scott-misc/openglass_case.stl)
+
+## 软件
+
+1. 下载项目:
    ```
-   git clone https://github.com/BasedHardware/openglass.git
-   cd openglass
+   git clone https://github.com/DFQX/openCameraLLM.git
+   cd openCameraLLM
    npm install
    ```
-   You can also use **yarn** to install, by doing
-   ```
-   yarn install
-   ```
-
-3. Add API keys for Groq and OpenAI in the `keys.ts` file located at [https://github.com/BasedHardware/OpenGlass/blob/main/sources/keys.ts](https://github.com/BasedHardware/OpenGlass/blob/main/sources/keys.ts).
-
-4. For Ollama, self-host the REST API from the repository at [https://github.com/ollama/ollama](https://github.com/ollama/ollama) and add the URL to the `keys.ts` file.
-
-5. Start the application:
+   
+5. 运行:
    ```
    npm start
    ```
 
-   If using **yarn** start the application with
-   ```
-   yarn start
-   ```
+   打开本地路径：
    
-   Note: This is an Expo project. For now, open the localhost link (this will appear after completing step 5) to access the web version.
+   http://localhost:8081/
 
 ## License
 

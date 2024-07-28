@@ -91,7 +91,11 @@ export default function CameraTab(props:{rawData: {uri: string, checked: boolean
             })
             const filterData = data.filter((item)=>!item.checked || item.type1=='');
             props.setRawData(filterData);
-            Toast.success("总共下载了"+String(filterData.length)+"张图片");
+            if(data.length-filterData.length==0){
+                Toast.success("只有同时勾选和标注才能被下载");
+            }else{
+                Toast.success("总共下载了"+String(data.length-filterData.length)+"张图片");
+            }
             return;
         }
 
@@ -115,7 +119,7 @@ export default function CameraTab(props:{rawData: {uri: string, checked: boolean
             console.log("img select:", idx);
             allIdx = (props.page-1)*props.pageSize+idx;
             console.log("img select:", allIdx);
-            props.rawData[allIdx].checked = true;
+            props.rawData[allIdx].checked = !props.rawData[allIdx].checked;
             const newData = props.rawData.slice();
             props.setRawData(newData);
         }
@@ -142,7 +146,7 @@ export default function CameraTab(props:{rawData: {uri: string, checked: boolean
 
         function getAbstrctDesc(desc: string){
             if(desc.length > 20){
-                return desc.substring(0,20) + "...";
+                return desc.substring(0,100) + "...";
             }else{
                 return desc;
             }

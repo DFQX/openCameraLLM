@@ -39,64 +39,64 @@ export const Main = React.memo(() => {
         if(!device){
             return;
         }
-        let le = !isLowPowerMode;
-        setIsLowPowerMode(le);
+        let sw = !isLowPowerMode;
+        setIsLowPowerMode(sw);
         let data = new Uint8Array(1);
-        if(le){
+        if(sw){
             data[0] = 1;
         }else{
             data[0] = 0;
         }
         sendBleControl(device, 0, data);
-        console.log("onChangeLowPowerMode", isLowPowerMode);
+        console.log("onChangeLowPowerMode", sw);
     }
 
     function onChangeTakePhoto(){
         if(!device){
             return;
         }
-        let le = !isTakePhoto;
-        setIsTakePhoto(le);
+        let sw = !isTakePhoto;
+        setIsTakePhoto(sw);
         let data = new Uint8Array(1);
-        if(le){
+        if(sw){
             data[0] = 1;
         }else{
             data[0] = 0;
         }
         sendBleControl(device, 1, data);
-        console.log("onChangeLowPowerMode", isTakePhoto);
+        console.log("onChangeTakePhoto", sw);
     }
 
     function onChangeTakeAudio(){
         if(!device){
             return;
         }
-        let le = !isTakeAudio;
-        setIsTakeAudio(le);
+        let sw = !isTakeAudio;
+        setIsTakeAudio(sw);
         let data = new Uint8Array(1);
-        if(le){
+        if(sw){
             data[0] = 1;
         }else{
             data[0] = 0;
         }
         sendBleControl(device, 2, data);
-        console.log("onChangeLowPowerMode", isTakeAudio);
+        console.log("onChangeTakeAudio", sw);
     }
 
     function onChangeTakeSaveSd(){
         if(!device){
             return;
         }
-        let le = !isSaveSd;
-        setIsSaveSd(le);
+        let sw = !isSaveSd;
+        setIsSaveSd(sw);
         let data = new Uint8Array(1);
-        if(le){
+        if(sw){
             data[0] = 1;
         }else{
             data[0] = 0;
         }
         sendBleControl(device, 3, data);
-        console.log("onChangeLowPowerMode", isSaveSd);
+        console.log("onChangeTakeSaveSd", sw);
     }
 
     const { Header, Footer, Sider, Content } = Layout;
@@ -108,20 +108,10 @@ export const Main = React.memo(() => {
 
     
     return (
-        // <SafeAreaView style={styles.container}>
-        //     {!device && (
-        //         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', alignSelf: 'center' }}>
-        //             <RoundButton title="Connect to the device" action={connectDevice} />
-        //         </View>
-        //     )}
-        //     {device && (
-        //         <DeviceView device={device} />
-        //     )}
-        // </SafeAreaView>
         <Layout className="components-layout-demo">
             <Header style={commonStyle}>
                 <Space style={{marginBottom:'10px', display:'flex', justifyContent:'center'}}>    
-                    <h2 style={{margin:'0px', color:'white'}}>图像采集系统</h2>
+                    <h2 style={{margin:'0px', color:'white'}}>OpenCameraLLM</h2>
                 </Space>
             </Header>
             <Layout style={{ height: '80%'}}>
@@ -135,19 +125,15 @@ export const Main = React.memo(() => {
                 </Sider>
                 <Content style={{overflow:'hidden'}}>
                     {device && <ContentTabs device={device} />}
+                    {/* {<ContentTabs device={device} />} */}
                 </Content>
             </Layout>
 
-            <Footer style={commonStyle}></Footer>
+            <Footer style={commonStyle}>
+                <Space style={{marginBottom:'10px', display:'flex', justifyContent:'center'}}>    
+                    <p style={{margin:'0px', color:'white'}}>本项目是openGlass的进一步改进，优化UI设计</p>
+                </Space>
+            </Footer>
         </Layout>
     );
-});
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: Theme.background,
-        alignItems: 'stretch',
-        justifyContent: 'center',
-    },
 });
