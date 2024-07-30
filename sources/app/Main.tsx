@@ -111,11 +111,7 @@ export const Main = React.memo(() => {
         <Layout className="components-layout-demo">
             <Header style={commonStyle}>
                 <Space style={{marginBottom:'10px', display:'flex', justifyContent:'center'}}>    
-<<<<<<< HEAD
                     <h2 style={{margin:'0px', color:'white'}}>OpenCameraLLM</h2>
-=======
-                    <h2 style={{margin:'0px', color:'white'}}>OpenGlass</h2>
->>>>>>> c545d02dd42aa6ba36051e76de2ede6c2a3ecad5
                 </Space>
             </Header>
             <Layout style={{ height: '80%'}}>
