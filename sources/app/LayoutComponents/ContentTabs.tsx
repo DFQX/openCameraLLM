@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import { Tabs,  Layout } from '@douyinfe/semi-ui';
 import { IconCamera, IconLayers } from '@douyinfe/semi-icons';
 import CameraTab from './CameraTab';
@@ -7,22 +6,6 @@ import ChatTab from './ChatTab';
 import { usePhotos } from '../BleCommunication/UsePhotos';
 import { Agent } from '../../agent/Agent';
 import { InvalidateSync } from '../../utils/invalidateSync';
-=======
-import { Tabs, TabPane, Layout } from '@douyinfe/semi-ui';
-import { IconCamera, IconEyeClosed, IconBox, IconLayers } from '@douyinfe/semi-icons';
-import CameraTab from './CameraTab';
-import ChatTab from './ChatTab';
-import { Pagination } from '@douyinfe/semi-ui';
-import { Select } from '@douyinfe/semi-ui';
-import { SelectProps } from '@douyinfe/semi-ui/lib/es/select';
-import { describeImage } from '../../modules/openai';
-import { usePhotos } from '../BleCommunication/UsePhotos';
-import { toBase64Image } from '../../utils/base64';
-import { ImageSourcePropType } from 'react-native';
-import { Agent } from '../../agent/Agent';
-import { InvalidateSync } from '../../utils/invalidateSync';
-import { textToSpeech } from '../../modules/openai';
->>>>>>> c545d02dd42aa6ba36051e76de2ede6c2a3ecad5
 
 
 export default function ContentTabs(props: {device:BluetoothRemoteGATTServer|null}){
@@ -178,11 +161,7 @@ export default function ContentTabs(props: {device:BluetoothRemoteGATTServer|nul
     const sync = React.useMemo(() => {
         let processed = 0;
         return new InvalidateSync(async () => {
-<<<<<<< HEAD
             if (processedPhotos.current!=null && processedPhotos.current.length > processed) {
-=======
-            if (processedPhotos.current.length > processed) {
->>>>>>> c545d02dd42aa6ba36051e76de2ede6c2a3ecad5
                 let unprocessed = processedPhotos.current.slice(processed);
                 processed = processedPhotos.current.length;
                 await agent.addPhoto(unprocessed);
