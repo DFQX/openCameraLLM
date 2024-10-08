@@ -19,7 +19,7 @@ export default function CameraTab(props:{rawData: {uri: string, checked: boolean
 
         // 定义标签选择相关的参数
         const [type1num, setType1num] = React.useState(0);
-        let labels = ['study', 'drink', 'eat', 'phone', 'computer', 'pad', 'bag', 'book', 'pen', 'sleep']
+        let labels = ['phone', 'computer', 'pad', 'bag', 'book', 'pen']
         let selectList = labels.map((item, index) => {
             return {value:index, label:item}
         })
